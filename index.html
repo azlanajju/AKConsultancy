@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK Consultancy - Education Consultancy Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 2px 20px rgba(25, 47, 89, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(25, 47, 89, 0.1);
+            transform: translateY(0);
+            padding: 10px;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        header.visible {
+            transform: translateY(0);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+    
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            color: #150d7d;
+            background: rgba(26, 47, 89, 0.05);
+        }
+
+        .nav-links a.active {
+            color: #150d7d;
+            background: rgba(26, 47, 89, 0.1);
+            font-weight: 600;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 1px;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 60%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #ffffff;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23150d7d" stop-opacity="0.03"/><stop offset="100%" stop-color="%232c5aa0" stop-opacity="0.01"/></radialGradient></defs><circle cx="200" cy="200" r="100" fill="url(%23a)"/><circle cx="800" cy="300" r="150" fill="url(%23a)"/><circle cx="600" cy="700" r="120" fill="url(%23a)"/></svg>') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        /* Floating Elements Animation */
+        .floating-element {
+            position: absolute;
+            z-index: 1;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .floating-element:nth-child(4) {
+            top: 30%;
+            right: 30%;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+            75% { transform: translateY(-15px) rotate(3deg); }
+        }
+
+        .book-icon, .graduation-icon, .lightbulb-icon, .star-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Animated Text */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: #150d7d;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInFromBottom 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInFromBottom {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: slideInFromBottom 1s ease-out 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(25, 47, 89, 0.3);
+            animation: slideInFromBottom 1s ease-out 0.9s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(25, 47, 89, 0.4);
+            background: linear-gradient(135deg, #0f1d35 0%, #1a4085 100%);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Colleges Section */
+        .colleges {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .colleges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .college-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .college-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .college-header {
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .college-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .college-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .college-body {
+            padding: 1.5rem;
+        }
+
+        .college-features {
+            list-style: none;
+        }
+
+        .college-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .college-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .contact-details {
+            list-style: none;
+        }
+
+        .contact-details li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: #150d7d;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 15px rgba(25, 47, 89, 0.1);
+                border-radius: 0 0 15px 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .services-grid,
+            .colleges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-icon"><img src="./AKLogoPng.png" alt="akLogo" style="width: 100%; height: 100%; object-fit: contain;"></div>
+                <h1>AK Consultancy</h1>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#colleges">Colleges</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="floating-element book-icon">📚</div>
+            <div class="floating-element graduation-icon">🎓</div>
+            <div class="floating-element lightbulb-icon">💡</div>
+            <div class="floating-element star-icon">⭐</div>
+            
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-subtitle">Education Excellence</div>
+                    <h2>Your Gateway to Quality Education</h2>
+                    <p>Expert guidance for admissions to top colleges in Mangalore. We help you choose the right path for your academic journey.</p>
+                    <a href="#contact" class="cta-button">Get Started Today</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🎓</div>
+                        <h3>Admission Guidance</h3>
+                        <p>Complete assistance with college admissions, application processes, and document preparation for top institutions in Mangalore.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">📚</div>
+                        <h3>Career Counseling</h3>
+                        <p>Professional career guidance to help students choose the right course and college based on their interests and aptitude.</p>
+                    </div>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">💼</div>
+                        <h3>Scholarship Assistance</h3>
+                        <p>Help students find and apply for scholarships and financial aid opportunities to make education more affordable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="colleges" class="colleges">
+            <div class="container">
+                <h2 class="section-title">Top Colleges in Mangalore</h2>
+                <div class="colleges-grid">
+                    <div class="college-card fade-in">
+                        <div class="college-header">
+                            <h3>Manipal Institute of Technology</h3>
+                            <div class="college-type">Engineering & Technology</div>
+                        </div>
+                        <div class="college-body">
+                            <ul class="college-features">
+                                <li>NAAC 'A' Grade Accredited</li>
+                                <li>Excellent Placement Record</li>
+                                <li>State-of-the-art Infrastructure</li>
+                                <li>Research Opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="college-card fade-in">
+                        <div class="college-header">
+                            <h3>Kasturba Medical College</h3>
+                            <div class="college-type">Medical & Health Sciences</div>
+                        </div>
+                        <div class="college-body">
+                            <ul class="college-features">
+                                <li>Premier Medical Institution</li>
+                                <li>Advanced Medical Facilities</li>
+                                <li>Experienced Faculty</li>
+                                <li>Clinical Training Programs</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="college-card fade-in">
+                        <div class="college-header">
+                            <h3>NITK Surathkal</h3>
+                            <div class="college-type">National Institute of Technology</div>
+                        </div>
+                        <div class="college-body">
+                            <ul class="college-features">
+                                <li>NIT with National Ranking</li>
+                                <li>Top Engineering Programs</li>
+                                <li>Industry Partnerships</li>
+                                <li>Research Excellence</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="college-card fade-in">
+                        <div class="college-header">
+                            <h3>Mangalore University</h3>
+                            <div class="college-type">State University</div>
+                        </div>
+                        <div class="college-body">
+                            <ul class="college-features">
+                                <li>Wide Range of Courses</li>
+                                <li>Affordable Education</li>
+                                <li>Regional Recognition</li>
+                                <li>Multiple Campuses</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="college-card fade-in">
+                        <div class="college-header">
+                            <h3>St. Aloysius College</h3>
+                            <div class="college-type">Arts, Science & Commerce</div>
+                        </div>
+                        <div class="college-body">
+                            <ul class="college-features">
+                                <li>Autonomous College Status</li>
+                                <li>Quality Liberal Education</li>
+                                <li>Strong Alumni Network</li>
+                                <li>Cultural Excellence</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="college-card fade-in">
+                        <div class="college-header">
+                            <h3>Canara Engineering College</h3>
+                            <div class="college-type">Engineering & Technology</div>
+                        </div>
+                        <div class="college-body">
+                            <ul class="college-features">
+                                <li>AICTE Approved</li>
+                                <li>Industry-Ready Curriculum</li>
+                                <li>Modern Laboratories</li>
+                                <li>Placement Support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Get in Touch</h3>
+                        <p>Ready to start your educational journey? Contact us today for personalized guidance and support.</p>
+                        <ul class="contact-details">
+                            <li>
+                                <div class="contact-icon">📞</div>
+                                <span>+91 89046 39975 | +91 6362490456</span>
+                            </li>
+                            <li>
+                                <div class="contact-icon">📧</div>
+                                <span>info@akconsultancy.com</span>
+                            </li>
+                            <li>
+                                <div class="contact-icon">📍</div>
+                                <span> Mangalore, Karnataka 575001</span>
+                            </li>
+                            <li>
+                                <div class="contact-icon">🕒</div>
+                                <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contact-form">
+                        <div style="background: linear-gradient(135deg, #150d7d 0%, #2c5aa0 100%); padding: 2rem; border-radius: 15px; color: white; text-align: center;">
+                            <h3 style="margin-bottom: 1rem;">Ready to Begin?</h3>
+                            <p style="margin-bottom: 2rem;">Schedule a free consultation with our education experts today!</p>
+                            <a href="tel:+918904639975" class="cta-button" style="background: white; color: #150d7d;">Call Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <div class="logo-icon"><img src="./AKLogoPng.png" alt="akLogo" style="width: 100%; height: 100%; object-fit: contain;filter: invert(1.5);"></div>
+                    <span style="margin-left: 10px; font-weight: 600;">AK Consultancy</span>
+                </div>
+                <p>&copy; 2025 AK Consultancy. All rights reserved. Your trusted education partner in Mangalore.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Navigation functionality
+        let lastScrollTop = 0;
+        let isScrollingUp = false;
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                
+                // Close mobile menu if open
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Active navigation and header hide/show functionality
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Header hide/show logic
+            if (currentScrollTop > lastScrollTop && currentScrollTop > 100) {
+                // Scrolling down
+                header.classList.add('hidden');
+                header.classList.remove('visible');
+                isScrollingUp = false;
+            } else if (currentScrollTop < lastScrollTop || currentScrollTop <= 100) {
+                // Scrolling up or near top
+                header.classList.remove('hidden');
+                header.classList.add('visible');
+                isScrollingUp = true;
+            }
+            
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
+            
+            // Active navigation logic
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+            
+            let currentActiveSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                
+                if (currentScrollTop >= sectionTop && currentScrollTop < sectionBottom) {
+                    currentActiveSection = section.getAttribute('id');
+                }
+            });
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentActiveSection) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Header style changes
+            if (currentScrollTop > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.backdropFilter = 'blur(15px)';
+                header.style.boxShadow = '0 2px 25px rgba(25, 47, 89, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(25, 47, 89, 0.1)';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Observe service and college cards
+        document.querySelectorAll('.service-card, .college-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
